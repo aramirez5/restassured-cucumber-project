@@ -22,11 +22,11 @@ jobs:
       run: gradle build
 
     - name: Run cucumber tests
-      run: gradle test -Dcucumber.options="--tags @API"
+      run: gradle test -Dcucumber.options="--tags @API" --plugin html:build/reports/cucumber-report.html
 
     - name: Upload report
       uses: actions/upload-artifact@v3
       if: always()
       with:
-        name: ExtentHtml
-        path: test-output/HtmlReport/ExtentHtml.html
+        name: Cucumber report
+        path: build/reports/cucumber-report.html
