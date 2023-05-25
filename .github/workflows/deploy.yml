@@ -19,12 +19,22 @@ jobs:
           java-version: "11"
           distribution: "temurin"
 
-      - name: Run cucumber tests
+      - name: Run REST Assured & Cucumber tests
         run: gradle testsCucumber -Dcucumber.options="--tags @API"
 
-      - name: Upload report
+      - name: Run REST Assured & TestNG tests
+        run: gradle tests
+
+      - name: Upload REST Assured & Cucumber report
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: Rest Assured & Cucumber report
+          name: REST Assured & Cucumber report
           path: test-output/HtmlReport
+
+      - name: Upload REST Assured & TestNG report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: REST Assured & TestNG report
+          path: build/reports/tests/test
