@@ -23,7 +23,7 @@ jobs:
         run: gradle testsCucumber -Dcucumber.options="--tags @API"
 
       - name: Run REST Assured & TestNG tests
-        run: gradle tests
+        run: gradle test
 
       - name: Upload REST Assured & Cucumber report
         uses: actions/upload-artifact@v3
