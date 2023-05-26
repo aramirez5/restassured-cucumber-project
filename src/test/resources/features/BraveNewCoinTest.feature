@@ -1,3 +1,4 @@
+@Brave
 Feature: BraveNewCoin API scenarios: POST GetToken
 
     Scenario: As a user, I can retrieve a token when making a valid POST request

@@ -6,8 +6,10 @@ import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import static io.restassured.RestAssured.given;
-
+import java.util.Properties;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class BraveNewCoinAPISteps {
 
@@ -15,14 +17,30 @@ public class BraveNewCoinAPISteps {
     private Response response;
     private ValidatableResponse json; 
 
+    
+
     @Given("^I have a valid API key for the (.*) URI$")
     public void iSetTheRequestParams(String URI){
-        request = given()
-            .header("X-RapidAPI-Key", "bc789f3b21msh15f7d3aaaeb4d0fp18cbc6jsnbf3aa716e3fd")
+        
+        Properties properties = new Properties();
+
+        try {
+            FileInputStream fileInputStream = new FileInputStream("config.properties");
+            properties.load(fileInputStream);
+            fileInputStream.close();
+
+            String rapidApiKey = properties.getProperty("bravenewcoin.rapidapi.key");
+
+            request = given()
+            .header("X-RapidAPI-Key", rapidApiKey)
             .header("X-RapidAPI-Host", "bravenewcoin.p.rapidapi.com")
             .contentType(ContentType.JSON)
             .baseUri(URI)
             .log().all();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @When("^I send a POST request with a valid (.*) payload to the (.*) endpoint$")
@@ -44,7 +62,7 @@ public class BraveNewCoinAPISteps {
     @Given("^I have an invalid API key for the (.*) URI$")
     public void iNotSetTheRequestParams(String URI){
         request = given()
-            .header("X-RapidAPI-Key", "z673a2b458msh046e2aeb4a981e9p10ff7bjsn2bca41d349cf")
+            .header("X-RapidAPI-Key", "z673k2b458jsh946e1aeb4v981e9p12fo7bjst2bca47l349cf")
             .header("X-RapidAPI-Host", "bravenewcoin.p.rapidapi.com")
             .contentType(ContentType.JSON)
             .baseUri(URI)
