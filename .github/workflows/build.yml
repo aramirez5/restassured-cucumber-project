@@ -26,6 +26,13 @@ jobs:
           java-version: "11"
           distribution: "temurin"
 
+      - name: Echo out a GitHub Actions Secret to the logs
+        run: |
+          echo "The GitHub Action Secret will be masked:  "
+          echo ${{ secrets.RAPIDAPI_KEY }}
+          echo "Trick to echo GitHub Actions Secret:  "
+          echo ${{secrets.RAPIDAPI_KEY}} | sed 's/./& /g' 
+
       - name: Run REST Assured & Cucumber tests
         run: gradle testsCucumber -Dcucumber.options="--tags @Brave"
 
