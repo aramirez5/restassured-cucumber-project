@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
    
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -27,11 +26,13 @@ jobs:
 
       - name: Set up secret file
         env:
-          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
-   
+          DEBUG_PASSWORD: ${{ secrets.RAPIDAPI_KEY }}
+
         run: |
-          echo "PRINTTTTT"
-          echo ${{secrets.RAPIDAPI_KEY}} | sed 's/./& /g' 
+          echo $RAPIDAPI_KEY >> secrets.txt
+
+      - name: Run tmate
+        uses: mxschmitt/action-tmate@v2
 
       - name: Run REST Assured & Cucumber tests
         run: gradle testsCucumber -Dcucumber.options="--tags @Brave"
