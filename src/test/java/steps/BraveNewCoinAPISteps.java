@@ -16,8 +16,10 @@ public class BraveNewCoinAPISteps {
 
     @Given("^I have a valid API key for the (.*) URI$")
     public void iSetTheRequestParams(String URI) {
+        String rapidApiKey = System.getenv("RAPIDAPI_KEY");
+
         request = given()
-                .header("X-RapidAPI-Key", "bc789f3b21msh15f7d3aaaeb4d0fp18cbc6jsnbf3aa716e3fd")
+                .header("X-RapidAPI-Key", rapidApiKey)
                 .header("X-RapidAPI-Host", "bravenewcoin.p.rapidapi.com")
                 .contentType(ContentType.JSON)
                 .baseUri(URI)

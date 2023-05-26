@@ -3,7 +3,7 @@ name: Java CI with Gradle
 on:
   push:
     branches:
-      - master
+      - env-values
   
   pull_request:
     branches:
@@ -12,6 +12,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    env:
+      RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
 
     steps:
       - name: Checkout code
@@ -24,7 +27,7 @@ jobs:
           distribution: "temurin"
 
       - name: Run REST Assured & Cucumber tests
-        run: gradle testsCucumber -Dcucumber.options="--tags @API"
+        run: gradle testsCucumber -Dcucumber.options="--tags @Brave"
 
       - name: Run REST Assured & TestNG tests
         run: gradle test
