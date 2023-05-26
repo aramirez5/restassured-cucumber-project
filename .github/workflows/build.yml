@@ -12,7 +12,10 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    environment: production
+    env:
+      RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+   
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -24,7 +27,7 @@ jobs:
           distribution: "temurin"
 
       - name: Run REST Assured & Cucumber tests
-        run: gradle testsCucumber -Dcucumber.options="--tags @API"
+        run: gradle testsCucumber -Dcucumber.options="--tags @Brave"
 
       - name: Run REST Assured & TestNG tests
         run: gradle test
