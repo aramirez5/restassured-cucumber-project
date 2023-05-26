@@ -3,7 +3,7 @@ name: Java CI with Gradle
 on:
   push:
     branches:
-      - env-values
+      - master
   
   pull_request:
     branches:
