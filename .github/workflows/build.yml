@@ -13,8 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
 
     steps:
       - name: Checkout code
@@ -26,12 +24,14 @@ jobs:
           java-version: "11"
           distribution: "temurin"
 
-      - name: Echo out a GitHub Actions Secret to the logs
+      - name: Set up secret file
+        env:
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
         run: |
-          echo "The GitHub Action Secret will be masked:  "
-          echo ${{ secrets.RAPIDAPI_KEY }}
-          echo "Trick to echo GitHub Actions Secret:  "
-          echo ${{secrets.RAPIDAPI_KEY}} | sed 's/./& /g' 
+          echo $RAPIDAPI_KEY >> secrets.txt
+
+      - name: Run tmate
+        uses: mxschmitt/action-tmate@v2 
 
       - name: Run REST Assured & Cucumber tests
         run: gradle testsCucumber -Dcucumber.options="--tags @Brave"
